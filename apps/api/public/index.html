@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Northeastern Airways — API</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="wrap">
+      <p class="eyebrow">Local development</p>
+      <h1>Northeastern Airways</h1>
+      <p class="lead">
+        This repository runs an <strong>API-first</strong> backend. JSON endpoints live under
+        <code>/api</code>; there is no separate React app in the monorepo yet.
+      </p>
+      <section class="card">
+        <h2>Try in the browser</h2>
+        <p>These return JSON (your browser may format it if you use an extension).</p>
+        <ul class="links">
+          <li><a href="/health">GET /health</a> — liveness</li>
+          <li><a href="/api/airports">GET /api/airports</a></li>
+          <li><a href="/api/flights">GET /api/flights</a></li>
+        </ul>
+      </section>
+      <section class="card">
+        <h2>Full UI later</h2>
+        <p>
+          A classic setup is <strong>Vite + React</strong> on port 5173 calling this API on port 3000
+          (already reflected in <code>CORS_ORIGINS</code> in <code>.env.example</code>).
+        </p>
+      </section>
+      <p class="foot">API process: keep <code>npx pnpm@9.15.0 dev</code> running from the repo root.</p>
+    </main>
+  </body>
+</html>

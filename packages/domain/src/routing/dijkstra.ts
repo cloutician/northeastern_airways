@@ -1,0 +1,60 @@
+import type { DijkstraResult, RoutingGraph } from "./types.js";
+
+/**
+ * Shortest path on a directed graph with non-negative weights.
+ * Node ids are strings (e.g. stringified airport primary keys).
+ */
+export function dijkstra(graph: RoutingGraph, start: string, end: string): DijkstraResult {
+  if (start === end) {
+    return { path: [start], distance: 0 };
+  }
+  const distances: Record<string, number> = {};
+  const prev: Record<string, string | null> = {};
+  const pq = new Map<string, number>();
+
+  for (const node of Object.keys(graph)) {
+    distances[node] = Number.POSITIVE_INFINITY;
+    prev[node] = null;
+    pq.set(node, Number.POSITIVE_INFINITY);
+  }
+
+  if (!(start in distances)) {
+    distances[start] = Number.POSITIVE_INFINITY;
+    prev[start] = null;
+    pq.set(start, Number.POSITIVE_INFINITY);
+  }
+
+  distances[start] = 0;
+  pq.set(start, 0);
+
+  while (pq.size > 0) {
+    let currentNode = [...pq.entries()].reduce((a, b) => (a[1] < b[1] ? a : b))[0];
+    const currentDist = pq.get(currentNode) ?? Number.POSITIVE_INFINITY;
+    pq.delete(currentNode);
+
+    if (currentNode === end) {
+      const path: string[] = [];
+      let u: string | null = end;
+      while (u) {
+        path.unshift(u);
+        u = prev[u] ?? null;
+      }
+      return { path, distance: distances[end] ?? Number.POSITIVE_INFINITY };
+    }
+
+    const neighbors = graph[currentNode] ?? {};
+    for (const neighbor of Object.keys(neighbors)) {
+      const edge = neighbors[neighbor];
+      if (edge === undefined) continue;
+      const alt = currentDist + edge;
+      const prior = distances[neighbor] ?? Number.POSITIVE_INFINITY;
+      if (alt < prior) {
+        distances[neighbor] = alt;
+        prev[neighbor] = currentNode;
+        pq.set(neighbor, alt);
+      }
+    }
+  }
+
+  return { path: [], distance: Number.POSITIVE_INFINITY };
+}

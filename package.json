@@ -1,0 +1,34 @@
+{
+  "name": "northeastern-airways",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@9.15.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.18.0",
+    "concurrently": "^9.1.2",
+    "eslint": "^9.18.0",
+    "globals": "^15.14.0",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.19.1"
+  },
+  "scripts": {
+    "build": "pnpm --filter @northeastern-airways/domain build && pnpm --filter @northeastern-airways/api build && pnpm --filter @northeastern-airways/web build",
+    "dev": "pnpm --filter @northeastern-airways/api dev",
+    "dev:web": "pnpm --filter @northeastern-airways/web dev",
+    "dev:stack": "pnpm --filter @northeastern-airways/domain build && pnpm db:refresh && concurrently -n api,web -c blue,green \"pnpm dev\" \"pnpm dev:web\"",
+    "lint": "pnpm -r run lint",
+    "test": "pnpm -r run test",
+    "db:migrate": "pnpm --filter @northeastern-airways/api db:migrate",
+    "db:migrate:undo": "pnpm --filter @northeastern-airways/api db:migrate:undo",
+    "db:seed": "pnpm --filter @northeastern-airways/api db:seed",
+    "db:seed:demo": "pnpm --filter @northeastern-airways/api db:seed:demo",
+    "db:refresh": "pnpm --filter @northeastern-airways/api db:refresh",
+    "db:seed:undo": "pnpm --filter @northeastern-airways/api db:seed:undo",
+    "db:reset": "pnpm --filter @northeastern-airways/api db:reset",
+    "db:seed:flights": "pnpm --filter @northeastern-airways/api db:seed:flights",
+    "seed": "pnpm db:seed"
+  }
+}

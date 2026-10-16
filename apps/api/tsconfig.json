@@ -1,0 +1,11 @@
+{
+  "extends": "../../tooling/tsconfig/base.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "allowJs": true,
+    "rootDir": "src",
+    "declaration": false,
+    "declarationMap": false
+  },
+  "include": ["src/**/*.ts", "src/db/seed-flight-schedule.cjs"]
+}
