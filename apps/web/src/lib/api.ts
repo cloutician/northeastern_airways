@@ -1,4 +1,5 @@
-export const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:3000";
+// Vite proxies development requests so phones never connect to their own localhost.
+export const API_URL = import.meta.env.DEV ? "" : (import.meta.env.VITE_API_URL ?? "http://localhost:3000");
 
 const TOKEN_KEY = "ne_token";
 

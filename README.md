@@ -36,55 +36,40 @@ V3 is a continuation of the original coursework project, not a separate commerci
 
 ## Screenshots
 
-Screenshot spaces are ready below. The image embeds are commented out until real captures are available, so the README does not display broken images. See the [screenshot checklist](docs/screenshots/README.md) for filenames and capture notes.
 
 ### Homepage
 
-_Screenshot to be added: desktop homepage and flight search._
 
-<!-- ![Northeastern Airways homepage with the flight search form](docs/screenshots/homepage.png) -->
+ ![Northeastern Airways homepage with the flight search form](docs/screenshots/homepage.png)
 
 ### Flight Search Results
 
-_Screenshot to be added: available routes, flight times and fares._
 
-<!-- ![Flight search results showing routes, departure times and fares](docs/screenshots/flight-search.png) -->
+![Flight search results showing routes, departure times and fares](docs/screenshots/flight-search.png)
 
 ### Interactive Flight Map
 
-_Screenshot to be added: selected plane, highlighted route and compact details panel._
 
-<!-- ![UK flight map with a selected flight and its details panel](docs/screenshots/flight-map.png) -->
+![UK flight map with a selected flight and its details panel](docs/screenshots/flight-map.png)
 
 ### Booking Review
 
-_Screenshot to be added: itinerary and fare before reserving a trip._
 
-<!-- ![Booking review with the selected itinerary and fare summary](docs/screenshots/booking-review.png) -->
+![Booking review with the selected itinerary and fare summary](docs/screenshots/booking-review.png)
 
 ### My Trips
 
-_Screenshot to be added: passenger dashboard with demonstration bookings._
 
-<!-- ![Passenger dashboard showing upcoming demonstration trips](docs/screenshots/my-trips.png) -->
-
-### Booking Details
-
-_Screenshot to be added: confirmed demonstration booking and itinerary._
-
-<!-- ![Confirmed demonstration booking with its itinerary and status](docs/screenshots/booking-details.png) -->
+![Passenger dashboard showing upcoming demonstration trips](docs/screenshots/my-trips.png)
 
 ### Sign In
 
-_Screenshot to be added: sign-in page and shared header alignment._
 
-<!-- ![Northeastern Airways sign-in page](docs/screenshots/sign-in.png) -->
+![Northeastern Airways sign-in page](docs/screenshots/sign-in.png)
 
 ### Mobile Layout
 
-_Screenshot to be added: homepage and search form at a phone-sized viewport._
-
-<!-- ![Northeastern Airways homepage and search form on mobile](docs/screenshots/mobile.png) -->
+![Northeastern Airways homepage and search form on mobile](docs/screenshots/mobile.png)
 
 ## Requirements
 
@@ -159,7 +144,7 @@ The templates provide a working local demo configuration:
 | `apps/api/.env` | `DATABASE_URL` | Docker PostgreSQL at `localhost:5433`; demo user/password `postgres`/`postgres` |
 | `apps/api/.env` | `CORS_ORIGINS` | `http://localhost:5173` |
 | `apps/api/.env` | `JWT_SECRET` | Development-only placeholder; use a unique random secret for any deployment |
-| `apps/web/.env` | `VITE_API_URL` | `http://localhost:3000` |
+| `apps/web/.env` | `VITE_API_URL` | `http://localhost:3000`; Vite's backend proxy target during development, direct browser API URL in production builds |
 
 No Stripe or other payment-provider SDK is used. Legacy `STRIPE_SECRET_KEY` and `STRIPE_WEBHOOK_SECRET` environment variables are ignored and cannot enable real payments. Do not enter real card details or payment credentials anywhere in this demo. Restart the development processes after changing environment files.
 
@@ -317,11 +302,21 @@ Make sure the files are named exactly `apps/api/.env` and `apps/web/.env`, not `
 
 ### A Port Is Already In Use
 
-You may already have an instance running. Check the existing application before starting another one, or stop the old development terminal with Ctrl+C. If you deliberately change a port, update its matching configuration too: the API port must match `VITE_API_URL`, the web origin must match `CORS_ORIGINS`, and PostgreSQL's published port must match `DATABASE_URL`. The frontend is configured to fail on an occupied port rather than silently start elsewhere.
+You may already have an instance running. Check the existing application before starting another one, or stop the old development terminal with Ctrl+C. If you deliberately change a port, update its matching configuration too: the API port must match `VITE_API_URL`, and PostgreSQL's published port must match `DATABASE_URL`. Direct browser-to-API connections also require a matching `CORS_ORIGINS` entry; Vite's development proxy avoids that cross-origin connection. The frontend is configured to fail on an occupied port rather than silently start elsewhere.
 
 ### The Website Opens But Data Does Not Load
 
-Check http://localhost:3000/health, confirm PostgreSQL is healthy, and read the API terminal output. Starting Vite alone is not enough; use `pnpm dev:stack`. Check that `VITE_API_URL` points to the API and that `CORS_ORIGINS` matches the web address you actually opened, including `localhost` versus `127.0.0.1`.
+Check http://localhost:3000/health, confirm PostgreSQL is healthy, and read the API terminal output. Starting Vite alone is not enough; use `pnpm dev:stack`. During development, Vite forwards `/api` and `/socket.io` to `VITE_API_URL`, so that address must be reachable from the computer running Vite, not from the phone. For production builds that call a separate API directly, `CORS_ORIGINS` must match the web address you actually opened, including `localhost` versus `127.0.0.1`.
+
+### Preview On A Phone
+
+Keep the API running, then start a separate preview from the repository root:
+
+```sh
+pnpm --filter @northeastern-airways/web exec vite --host 0.0.0.0 --port 5174
+```
+
+Connect the phone to the same trusted Wi-Fi and open `http://<computer-LAN-IP>:5174`. Leave `VITE_API_URL` pointing to the computer's local API, for example `http://localhost:3000`. API requests and live WebSocket updates go through the preview, so the phone only needs access to port 5174. Allow that preview through the firewall on trusted private networks only; do not disable the firewall or forward this development server to the internet.
 
 ### No Flights Appear Or Search Has No Availability
 
