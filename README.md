@@ -36,34 +36,27 @@ V3 is a continuation of the original coursework project, not a separate commerci
 
 ## Screenshots
 
-
 ### Homepage
 
-
- ![Northeastern Airways homepage with the flight search form](docs/screenshots/homepage.png)
+![Northeastern Airways homepage with the flight search form](docs/screenshots/homepage.png)
 
 ### Flight Search Results
-
 
 ![Flight search results showing routes, departure times and fares](docs/screenshots/flight-search.png)
 
 ### Interactive Flight Map
 
-
 ![UK flight map with a selected flight and its details panel](docs/screenshots/flight-map.png)
 
 ### Booking Review
-
 
 ![Booking review with the selected itinerary and fare summary](docs/screenshots/booking-review.png)
 
 ### My Trips
 
-
 ![Passenger dashboard showing upcoming demonstration trips](docs/screenshots/my-trips.png)
 
 ### Sign In
-
 
 ![Northeastern Airways sign-in page](docs/screenshots/sign-in.png)
 
@@ -100,14 +93,14 @@ Use Docker Desktop on Windows/macOS, or a Docker Engine installation with Compos
 
 ## First Run On Another Machine
 
-Clone this repository using its actual GitHub URL. Replace `YOUR-USERNAME` with the repository owner's GitHub name; the URL below is a placeholder:
+Clone the repository:
 
 ```sh
-git clone https://github.com/YOUR-USERNAME/northeastern_airways.git
+git clone https://github.com/cloutician/northeastern_airways.git
 cd northeastern_airways
 ```
 
-If the repository has a different name, use its actual URL and folder name. All remaining commands run from the repository root, the directory containing `package.json` and `docker-compose.yml`.
+All remaining commands run from the repository root, the directory containing `package.json` and `docker-compose.yml`.
 
 These setup commands work in PowerShell and Unix shells. On Windows, use PowerShell rather than Command Prompt for the `cp` commands:
 
@@ -366,16 +359,16 @@ git commit -m "Initial Northeastern Airways coursework application"
 
 If Git asks for author details, set the name and email you intend to publish for this repository with `git config user.name "Your Name"` and `git config user.email "YOUR-PUBLIC-GIT-EMAIL"`, then retry the commit. These are placeholders, not account credentials.
 
-Create an **empty** repository on GitHub without initializing another README, license or `.gitignore`. Replace the placeholder URL below with that repository's actual URL:
+The project's remote URL is shown below. Add it only when publishing the original local folder and no `origin` exists yet. A clone already has its remote configured. For your own fork or separate copy, create an **empty** GitHub repository without another README, license or `.gitignore`, and use your own repository URL instead:
 
 ```sh
-git remote add origin https://github.com/YOUR-USERNAME/northeastern_airways.git
+git remote add origin https://github.com/cloutician/northeastern_airways.git
 git push -u origin main
 ```
 
 Authenticate through your configured Git/GitHub sign-in method when prompted; never put access tokens directly in the remote URL or README. These are manual publishing instructions only. None of the setup commands automatically creates a GitHub repository or uploads code.
 
-After publishing, replace the placeholder clone URL near the top of this README with the real URL. GitHub displays the root README automatically, and the relative documentation links continue to work in a clone.
+GitHub displays the root README automatically, and the relative documentation and screenshot links continue to work in a clone. Commit screenshots and their README links together so the published README never points to missing files.
 
 ### Hosting Is A Separate Step
 
