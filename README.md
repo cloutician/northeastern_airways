@@ -69,7 +69,7 @@ V3 is a continuation of the original coursework project, not a separate commerci
 
 ### Mobile Layout
 
-![Northeastern Airways homepage and search form on mobile](docs/screenshots/mobile.png)
+<img src="docs/screenshots/mobile.png" alt="Northeastern Airways on mobile" width="300">
 
 ## Requirements
 
